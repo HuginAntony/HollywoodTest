@@ -11,7 +11,9 @@ namespace Tournament.DataAccess.ModelConfigurations
             entity.HasKey(e => e.EventDetailStatusId);
 
             entity.Property(e => e.EventDetailStatusName)
-                .HasConversion<string>();
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .IsUnicode(false);
         }
     }
 }
