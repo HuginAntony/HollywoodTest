@@ -1,10 +1,26 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'tournament',
+    loadChildren: () => import('./tournament/tournament.module').then((m) => m.TournamentModule)
+  },
+  {
+    path: 'event',
+    loadChildren: () => import('./event/event.module').then((m) => m.EventModule),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules,
+    onSameUrlNavigation: 'reload',
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
