@@ -13,8 +13,8 @@ namespace Tournament.WebApi.Mapping
             CreateMap<EventDetailRequest, EventDetail>().ReverseMap();
 
             CreateMap<DataAccess.Models.Tournament, TournamentResponse>();
-            //CreateMap<Event, EventResponse>();
-            //CreateMap<EventDetail, EventDetailResponse>();
+            CreateMap<Event, EventResponse>();
+            CreateMap<EventDetail, EventDetailResponse>();
 
         }
     }

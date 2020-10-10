@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace Tournament.WebApi.Controllers
         public async Task<IActionResult> GetAllTournaments()
         {
             var tournaments = await _tournamentRepository.LazyGetAll().ToListAsync();
-            return Ok(tournaments);
+            return Ok(_mapper.Map<List<TournamentResponse>>(tournaments));
         }
 
         [HttpGet]
@@ -41,7 +42,7 @@ namespace Tournament.WebApi.Controllers
             if (tournament == null)
                 return NotFound();
 
-            return Ok(tournament);
+            return Ok(_mapper.Map<TournamentResponse>(tournament));
         }
 
         [HttpPost]
@@ -65,9 +66,9 @@ namespace Tournament.WebApi.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
-        public async Task<IActionResult> UpdateTournament(int id, [FromBody] TournamentRequest tournamentRequest)
+        public async Task<IActionResult> UpdateTournament(long id, [FromBody] TournamentRequest tournamentRequest)
         {
-            var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentName == tournamentRequest.TournamentName).SingleOrDefaultAsync();
+            var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id).SingleOrDefaultAsync();
 
             if (thisTournament == null)
                 return NotFound();
@@ -97,5 +98,4 @@ namespace Tournament.WebApi.Controllers
             return Ok();
         }
     }
-}
 }
