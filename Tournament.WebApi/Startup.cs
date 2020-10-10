@@ -1,18 +1,23 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
+using Tournament.Core.Validators;
 using Tournament.DataAccess;
 using Tournament.DataAccess.Core;
 using Tournament.DataAccess.Interfaces;
@@ -33,7 +38,20 @@ namespace Tournament.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<TournamentValidator>());
+
+            services.Configure<ApiBehaviorOptions>(options => options.InvalidModelStateResponseFactory = (context) =>
+            {
+                var errorMessages = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
+                var keys = context.ModelState.Keys.Select((k, i) => new { Field = k, Error = errorMessages[i] });
+
+                var result = new
+                {
+                    Message = "Validation errors",
+                    Errors = keys
+                };
+                return new BadRequestObjectResult(result);
+            });
 
             // Add database service 
             services.AddDbContext<HollywoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TournamentApiDB")));
@@ -90,6 +108,8 @@ namespace Tournament.WebApi
                     Title = "Tournament REST API",
                     Description = "Used to create and update events related to a tournament"
                 });
+
+                c.AddFluentValidationRules();
             });
         }
 
