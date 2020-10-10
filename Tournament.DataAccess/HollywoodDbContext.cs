@@ -7,6 +7,11 @@ namespace Tournament.DataAccess
 {
     public class HollywoodDbContext : IdentityDbContext<ApplicationUser>
     {
+        public HollywoodDbContext()
+        {
+            
+        }
+
         public HollywoodDbContext(DbContextOptions<HollywoodDbContext> options) : base(options)
         {
 
