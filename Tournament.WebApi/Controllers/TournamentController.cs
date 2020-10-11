@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Tournament.DataAccess.Interfaces;
 namespace Tournament.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     [Produces("application/json")]
     public class TournamentController : ControllerBase

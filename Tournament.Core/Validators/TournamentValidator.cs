@@ -10,7 +10,7 @@ namespace Tournament.Core.Validators
             RuleFor(x => x.TournamentName)
                 .MaximumLength(200)
                 .NotEmpty()
-                .WithMessage("tournament name is mandatory.")
+                .WithMessage("tournament name is required.")
                 .OverridePropertyName("tournamentName");
         }
     }

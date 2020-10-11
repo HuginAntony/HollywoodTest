@@ -128,6 +128,9 @@ namespace Tournament.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tournament Web API v1");
             });
+            app.UseCors(x => x.WithOrigins("http://localhost:4200")
+                                           .AllowAnyMethod()
+                                           .AllowAnyHeader());
 
             app.UseRouting();
 

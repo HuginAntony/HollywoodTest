@@ -9,33 +9,33 @@ namespace Tournament.Core.Validators
         {
             RuleFor(x => x.TournamentId)
                 .NotEmpty()
-                .WithMessage("tournamentId is mandatory.")
+                .WithMessage("tournamentId is required.")
                 .OverridePropertyName("tournamentId");
 
             RuleFor(x => x.EventName)
                 .MaximumLength(100)
                 .NotEmpty()
-                .WithMessage("eventName is mandatory.")
+                .WithMessage("eventName is required.")
                 .OverridePropertyName("eventName");
 
             RuleFor(x => x.EventNumber)
                 .NotEmpty()
-                .WithMessage("eventNumber is mandatory.")
+                .WithMessage("eventNumber is required.")
                 .OverridePropertyName("eventNumber");
 
             RuleFor(x => x.EventDateTime)
                 .NotEmpty()
-                .WithMessage("eventDateTime is mandatory.")
+                .WithMessage("eventDateTime is required.")
                 .OverridePropertyName("eventDateTime");
 
             RuleFor(x => x.EventEndDateTime)
                 .NotEmpty()
-                .WithMessage("eventEndDateTime is mandatory.")
+                .WithMessage("eventEndDateTime is required.")
                 .OverridePropertyName("eventEndDateTime");
 
             RuleFor(x => x.AutoClose)
                 .NotEmpty()
-                .WithMessage("autoClose is mandatory.")
+                .WithMessage("autoClose is required.")
                 .OverridePropertyName("autoClose");
         }
     }
