@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-header bg-dark text-white">Info</div>
+  <form class="needs-validation" (ngSubmit)="saveChanges(u)" #u="ngForm">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Tournament name</label>
+            <input
+              required
+              [(ngModel)]="tournament.tournamentName"
+              name="tournamentName"
+              type="text"
+              class="form-control"
+              minlength="1"
+              maxlength="200"
+              #tn="ngModel"
+              [ngClass]="{ 'is-invalid': tn.touched && tn.errors }"
+              [ngClass]="{ 'is-valid': tn.touched && tn.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="tn.touched && tn.errors">
+              <div *ngIf="tn.hasError('required')">Tournament name is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="card-link btn btn-primary" [disabled]="u.invalid || u.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
+    </div>
+  </form>
+</div>

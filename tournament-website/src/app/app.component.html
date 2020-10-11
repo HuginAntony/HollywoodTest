@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
   <a class="navbar-brand" href="#">
     Hollywood Management
   </a>
@@ -11,25 +11,26 @@
       <a href (click)="false" class="nav-link" ngbDropdownToggle>Tournament</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/tournament/add']">Add Tournament</button>
-        <button ngbDropdownItem [routerLink]="['/tournament/view']">View Tournaments</button>
+        <button ngbDropdownItem [routerLink]="['/tournament']">View Tournaments</button>
       </div>
     </li>
     <li ngbDropdown class="nav-item">
       <a href (click)="false" class="nav-link" ngbDropdownToggle>Event</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/event/add']">Add Event</button>
-        <button ngbDropdownItem [routerLink]="['/event/view']">View Events</button>
+        <button ngbDropdownItem [routerLink]="['/event']">View Events</button>
       </div>
     </li>
     <li ngbDropdown class="nav-item">
       <a href (click)="false" class="nav-link" ngbDropdownToggle>Event Detail</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/eventDetail/add']">Add Event Detail</button>
-        <button ngbDropdownItem [routerLink]="['/eventDetail/add']">View Event Details</button>
+        <button ngbDropdownItem [routerLink]="['/eventDetail']">View Event Details</button>
       </div>
     </li>
   </ul>
   
 </div>
 </nav>
+
 <router-outlet></router-outlet>
