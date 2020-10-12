@@ -1,0 +1,140 @@
+<div class="card">
+  <div class="card-header bg-dark text-white">Add/Update Event</div>
+  {{to.valid}}
+  <form class="needs-validation" (ngSubmit)="saveChanges(ef)" #ef="ngForm">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Tournament</label>
+            <select
+              required
+              [(ngModel)]="event.tournamentId"
+              class="form-control custom-select"
+              #to
+              id="tournamentId"
+              name="tournamentId"
+              [class.is-invalid]="to.touched && to.invalid"
+              [class.is-valid]="to.touched && to.valid"
+            >
+              <option [value]="''">Please Select</option>
+              <option *ngFor="let t of tournaments" [value]="t.tournamentId">{{ t.tournamentName }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="to.touched && to.errors">
+              <div *ngIf="to.hasError('required')">Tournament is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event name</label>
+            <input
+              required
+              [(ngModel)]="event.eventName"
+              name="eventName"
+              type="text"
+              class="form-control"
+              minlength="1"
+              maxlength="100"
+              #e="ngModel"
+              [ngClass]="{ 'is-invalid': e.touched && e.errors }"
+              [ngClass]="{ 'is-valid': e.touched && e.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="e.touched && e.errors">
+              <div *ngIf="e.hasError('required')">Event name is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event number</label>
+            <input
+              required
+              [(ngModel)]="event.eventNumber"
+              name="eventNumber"
+              type="number"
+              class="form-control"
+              min="1"
+              max="32676"
+              #eventNum="ngModel"
+              [ngClass]="{ 'is-invalid': eventNum.touched && eventNum.errors }"
+              [ngClass]="{ 'is-valid': eventNum.touched && eventNum.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="eventNum.touched && eventNum.errors">
+              <div *ngIf="eventNum.hasError('required')">Event number is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event date</label>
+            <div class="input-group">
+              <input
+                required
+                [ngModel]="event.eventDateTime | date:'yyyy-MM-dd'"
+                (ngModelChange)="event.eventDateTime=$event"
+                placeholder="yyyy-MM-dd" 
+                min="{{today}}"
+                name="eventDateTime"
+                type="date"
+                class="form-control"
+                #eventDateTime="ngModel"
+                [ngClass]="{ 'is-invalid': eventDateTime.touched && eventDateTime.errors }"
+                [ngClass]="{ 'is-valid': eventDateTime.touched && eventDateTime.valid }"
+              />
+              <div class="invalid-feedback" *ngIf="eventDateTime.touched && eventDateTime.errors">
+                <div *ngIf="eventDateTime.hasError('required')">Event date is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event end date</label>
+            <div class="input-group">
+              <input
+                required
+                [ngModel]="event.eventEndDateTime | date:'yyyy-MM-dd'"
+                (ngModelChange)="event.eventEndDateTime=$event"
+                placeholder="yyyy-MM-dd" 
+                min="{{minEndDate}}"
+                name="eventEndDateTime"
+                type="date"
+                class="form-control"
+                #eventEndDateTime="ngModel"
+                [ngClass]="{ 'is-invalid': eventEndDateTime.touched && eventEndDateTime.errors }"
+                [ngClass]="{ 'is-valid': eventEndDateTime.touched && eventEndDateTime.valid }"
+              />
+              <div class="invalid-feedback" *ngIf="eventEndDateTime.touched && eventEndDateTime.errors">
+                <div *ngIf="eventEndDateTime.hasError('required')">Event end date is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form-check">
+        <input
+          [(ngModel)]="event.autoClose"
+          name="autoClose"
+          type="checkbox"
+          class="form-check-input"
+          #eventAutoClose="ngModel"
+          [ngClass]="{ 'is-invalid': eventAutoClose.touched && eventAutoClose.errors }"
+          [ngClass]="{ 'is-valid': eventAutoClose.touched && eventAutoClose.valid }">
+        <label class="form-check-label" for="autoClose">Auto close</label>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="card-link btn btn-primary" [disabled]="ef.invalid || ef.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
+    </div>
+  </form>
+</div>

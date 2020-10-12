@@ -7,22 +7,22 @@
   </button>
   <div class="collapse navbar-collapse" [ngbCollapse]="true" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto" *ngIf="user$ | async as user">
-    <li ngbDropdown class="nav-item">
-      <a href (click)="false" class="nav-link" ngbDropdownToggle>Tournament</a>
+    <li ngbDropdown class="nav-item" dropdown-toggle>
+      <a href (click)="false" class="nav-link text-white" ngbDropdownToggle>Tournament</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/tournament/add']">Add Tournament</button>
         <button ngbDropdownItem [routerLink]="['/tournament']">View Tournaments</button>
       </div>
     </li>
     <li ngbDropdown class="nav-item">
-      <a href (click)="false" class="nav-link" ngbDropdownToggle>Event</a>
+      <a href (click)="false" class="nav-link text-white" ngbDropdownToggle>Event</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/event/add']">Add Event</button>
         <button ngbDropdownItem [routerLink]="['/event']">View Events</button>
       </div>
     </li>
     <li ngbDropdown class="nav-item">
-      <a href (click)="false" class="nav-link" ngbDropdownToggle>Event Detail</a>
+      <a href (click)="false" class="nav-link text-white" ngbDropdownToggle>Event Detail</a>
       <div ngbDropdownMenu>
         <button ngbDropdownItem [routerLink]="['/eventDetail/add']">Add Event Detail</button>
         <button ngbDropdownItem [routerLink]="['/eventDetail']">View Event Details</button>

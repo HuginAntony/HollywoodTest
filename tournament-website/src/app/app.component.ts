@@ -1,7 +1,8 @@
-import { User } from './models/event.model';
+
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from './models/user.model';
 
 @Component({
   selector: 'app-root',

@@ -1,6 +1,6 @@
 export interface Event {
     eventId?: number;
-    eournamentId?: number;
+    tournamentId?: number;
     eventName?: string;
     eventNumber?: number;
     eventDateTime?: string;
