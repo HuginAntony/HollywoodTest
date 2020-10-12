@@ -1,0 +1,5 @@
+div.card:hover {
+    border-style: outset;
+    border-color: coral;
+    border: 10px;
+    }

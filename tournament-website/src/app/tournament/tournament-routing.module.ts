@@ -9,6 +9,10 @@ const routes: Routes = [
     component: ViewTournamentsComponent
   },
   {
+    path: ':id',
+    component: AddTournamentComponent
+  },
+  {
     path: 'add',
     component: AddTournamentComponent
   },

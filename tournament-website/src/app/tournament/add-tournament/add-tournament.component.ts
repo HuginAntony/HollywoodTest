@@ -13,24 +13,40 @@ import { TournamentService } from 'src/app/services/tournament.service';
 export class AddTournamentComponent implements OnInit {
 
   tournament: Tournament = {};
+  isUpdate = false;
   constructor(private tournamentService: TournamentService,  private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.route.snapshot.params.id){
+      this.isUpdate = true;
+      this.tournamentService.get(this.route.snapshot.params.id).subscribe(t => this.tournament = t);
+    }
   }
 
   saveChanges(form: NgForm): void {
-      this.tournamentService.create(form.value).subscribe(() =>{
-        Swal.fire({
-        icon: 'success',
-        title: 'Tournament successfully saved.',
-        showConfirmButton: false,
-        timer: 1500
-        });
-        this.router.navigate(['../'], { relativeTo: this.route });
+    if (this.isUpdate){
+      this.tournamentService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
+        this.handleSuccess();
       });
+    }
+    else{
+      this.tournamentService.create(form.value).subscribe(() => {
+        this.handleSuccess();
+      });
+    }
   }
 
   cancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  handleSuccess(): void{
+    Swal.fire({
+      icon: 'success',
+      title: 'Tournament successfully saved.',
+      showConfirmButton: false,
+      timer: 1500
+    });
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

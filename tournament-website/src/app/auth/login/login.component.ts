@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
   saveChanges(form: NgForm): void {
       Swal.showLoading();
       this.authService.signIn(form.value).subscribe(() => {
-        Swal.fire();
-        this.router.navigate(['../home'], { relativeTo: this.route });
+         Swal.close();
+         this.router.navigate(['./home'], { relativeTo: this.route });
       });
   }
 }
