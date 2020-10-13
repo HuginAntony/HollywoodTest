@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ using Tournament.DataAccess;
 using Tournament.DataAccess.Core;
 using Tournament.DataAccess.Interfaces;
 using Tournament.DataAccess.Models;
+using Tournament.WebApi.ExceptionHandler;
 using Tournament.WebApi.Policies;
 
 namespace Tournament.WebApi
@@ -42,8 +44,10 @@ namespace Tournament.WebApi
 
             services.Configure<ApiBehaviorOptions>(options => options.InvalidModelStateResponseFactory = (context) =>
             {
-                var errorMessages = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
-                var keys = context.ModelState.Keys.Select((k, i) => new { Field = k, Error = errorMessages[i] });
+                var errorMessages = context.ModelState.Values.Where(f => f.ValidationState == ModelValidationState.Invalid).SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
+                var invalidKeys = context.ModelState.Where(f => f.Value.ValidationState == ModelValidationState.Invalid).Select(d => d.Key);
+                var keys = context.ModelState.Keys.Where(k => invalidKeys.Contains(k)).Select((k, i) => new { Field = k, Error = errorMessages[i] });
+
 
                 var result = new
                 {
@@ -119,6 +123,8 @@ namespace Tournament.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
