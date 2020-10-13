@@ -35,6 +35,18 @@ namespace Tournament.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("isNameValid/{name}")]
+        public async Task<IActionResult> IsNameValid(string name)
+        {
+            var eventDetail = await _eventDetailRepository.LazyGet(t => t.EventDetailName == name).SingleOrDefaultAsync();
+
+            if (eventDetail == null)
+                return Ok(true);
+
+            return Ok(false);
+        }
+
+        [HttpGet]
         [Route("{id:long}", Name = "GetEventDetailById")]
         public async Task<IActionResult> GetEventDetailById(long id)
         {
