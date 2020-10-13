@@ -14,10 +14,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-event.component.scss']
 })
 export class AddEventComponent implements OnInit {
-
-  userForm: FormGroup;
-  roleList = ['fwfw', 'bdfbfdb'];
-
   event: Event = {};
   tournaments: Tournament[];
   isUpdate = false;
@@ -32,7 +28,7 @@ export class AddEventComponent implements OnInit {
     endDate.setDate(endDate.getDate() + 1);
     this.minEndDate = endDate.toJSON().slice(0, 10);
 
-    if (this.route.snapshot.params.id){
+    if (this.route.snapshot.params.id && Number(this.route.snapshot.params.id)){
       this.isUpdate = true;
       this.eventService.get(this.route.snapshot.params.id).subscribe(e => this.event = e);
     }
@@ -67,22 +63,3 @@ export class AddEventComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
-  // initializeForm(): void {
-  //   this.userForm = this.fb.group({
-  //     userId: [''],
-  //     firstName: ['', [Validators.required]],
-  //     lastName: ['', [Validators.required]],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     phone: [
-  //       '',
-  //       [Validators.required, Validators.maxLength(12), Validators.minLength(10)],
-  //     ],
-  //     postalCode: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(4)]],
-  //     companyName: [''],
-  //     companyNumber: [''],
-  //     phoneNumberAlternate: ['', [Validators.required, Validators.maxLength(12), Validators.minLength(10)]],
-  //     dateOfBirth: [null, Validators.compose([Validators.required])],
-  //     lockoutEnabled: [false],
-  //     roleName: ['', [Validators.required]]
-  //   });
-  // }

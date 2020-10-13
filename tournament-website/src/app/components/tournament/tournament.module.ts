@@ -7,7 +7,7 @@ import { AddTournamentComponent } from './add-tournament/add-tournament.componen
 import { ViewTournamentsComponent } from './view-tournaments/view-tournaments.component';
 
 @NgModule({
-    declarations: [AddTournamentComponent,ViewTournamentsComponent],
+    declarations: [AddTournamentComponent, ViewTournamentsComponent],
     imports: [CommonModule, SharedModule, TournamentRoutingModule, RouterModule],
   })
   export class TournamentModule {}

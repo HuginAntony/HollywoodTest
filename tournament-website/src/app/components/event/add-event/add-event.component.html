@@ -1,6 +1,5 @@
 <div class="card">
   <div class="card-header bg-dark text-white">Add/Update Event</div>
-  {{to.valid}}
   <form class="needs-validation" (ngSubmit)="saveChanges(ef)" #ef="ngForm">
     <div class="card-body">
       <div class="row">
@@ -39,11 +38,13 @@
               minlength="1"
               maxlength="100"
               #e="ngModel"
+              appNameExists [type]="'Event'"
               [ngClass]="{ 'is-invalid': e.touched && e.errors }"
               [ngClass]="{ 'is-valid': e.touched && e.valid }"
             />
             <div class="invalid-feedback" *ngIf="e.touched && e.errors">
               <div *ngIf="e.hasError('required')">Event name is required.</div>
+              <div *ngIf="e.hasError('duplicateName')">{{e.errors.duplicateName}}</div>
             </div>
           </div>
         </div>

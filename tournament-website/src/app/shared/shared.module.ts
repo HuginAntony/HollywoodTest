@@ -3,9 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NameExistsValidator } from './validators/nameExists.validator';
 
 @NgModule({
     declarations: [
+      // Validators
+      NameExistsValidator
     ],
     imports: [
       CommonModule,
@@ -15,11 +18,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       NgbModule
     ],
     exports: [
-      // * Modules
+      // Modules
       NgbModule,
       FormsModule,
       ReactiveFormsModule,
+
+      // Validators
+      NameExistsValidator
     ],
   })
   export class SharedModule {}
-  

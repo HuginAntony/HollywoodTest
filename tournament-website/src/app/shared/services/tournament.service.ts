@@ -16,8 +16,12 @@ export class TournamentService {
     return this.http.get<Tournament[]>(this.url);
   }
 
-  get(id: string): Observable<Tournament> {
+  get(id: number): Observable<Tournament> {
     return this.http.get<Tournament>(`${this.url}/${id}`);
+  }
+
+  isNameValid(name: string): Observable<boolean>{
+    return this.http.get<boolean>(`${this.url}/isNameValid/${name}`);
   }
 
   create(tournament: Tournament): Observable<Tournament> {

@@ -1,0 +1,4 @@
+div.card.shadow:hover {
+    border-style: outset;
+    transform: scale(1.02);
+}

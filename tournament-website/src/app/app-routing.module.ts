@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/event/event.module').then((m) => m.EventModule),
   },
   {
+    path: 'eventDetail',
+    loadChildren: () => import('./components/eventDetails/event-details.module').then((m) => m.EventDetailModule),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

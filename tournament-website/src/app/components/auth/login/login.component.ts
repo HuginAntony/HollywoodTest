@@ -16,6 +16,11 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,  private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+      this.authService.user$.subscribe(u => {
+        if (u){
+          this.router.navigate(['./home'], { relativeTo: this.route });
+        }
+      });
   }
 
   saveChanges(form: NgForm): void {

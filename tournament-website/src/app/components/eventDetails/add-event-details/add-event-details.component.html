@@ -1,0 +1,136 @@
+<div class="card">
+  <div class="card-header bg-dark text-white">Add/Update Event Detail</div>
+  <form class="needs-validation" (ngSubmit)="saveChanges(ef)" #ef="ngForm">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event</label>
+            <select
+              required
+              [(ngModel)]="eventDetail.eventId"
+              class="form-control"
+              #ev
+              id="eventId"
+              name="eventId"
+              [ngClass]="{ 'is-invalid': ev.touched && ev.errors }"
+              [ngClass]="{ 'is-valid': ev.touched && ev.valid }"
+            >
+              <option [value]="''">Please Select</option>
+              <option *ngFor="let e of events" [value]="e.eventId">{{ e.eventName }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="ev.touched && ev.errors">
+              <div *ngIf="ev.hasError('required')">Event is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event detail name</label>
+            <input
+              required
+              [(ngModel)]="eventDetail.eventDetailName"
+              name="eventDetailName"
+              type="text"
+              class="form-control"
+              minlength="1"
+              maxlength="100"
+              #e="ngModel"
+              appNameExists [type]="'EventDetail'"
+              [ngClass]="{ 'is-invalid': e.touched && e.errors }"
+              [ngClass]="{ 'is-valid': e.touched && e.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="e.touched && e.errors">
+              <div *ngIf="e.hasError('required')">Event name is required.</div>
+              <div *ngIf="e.hasError('duplicateName')">{{e.errors.duplicateName}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event detail number</label>
+            <input
+              required
+              [(ngModel)]="eventDetail.finishingPosition"
+              name="finishingPosition"
+              type="number"
+              class="form-control"
+              min="1"
+              max="32676"
+              #finishingPosition="ngModel"
+              [ngClass]="{ 'is-invalid': finishingPosition.touched && finishingPosition.errors }"
+              [ngClass]="{ 'is-valid': finishingPosition.touched && finishingPosition.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="finishingPosition.touched && finishingPosition.errors">
+              <div *ngIf="finishingPosition.hasError('required')">Event number is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Event detail odd</label>
+            <input
+              required
+              [(ngModel)]="eventDetail.finishingPosition"
+              name="finishingPosition"
+              type="number"
+              class="form-control"
+              min="1"
+              max="32676"
+              maxlength="26"
+              #finishingPosition="ngModel"
+              [ngClass]="{ 'is-invalid': finishingPosition.touched && finishingPosition.errors }"
+              [ngClass]="{ 'is-valid': finishingPosition.touched && finishingPosition.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="finishingPosition.touched && finishingPosition.errors">
+              <div *ngIf="finishingPosition.hasError('required')">Event detail odd is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Finishing position</label>
+            <input
+              required
+              [(ngModel)]="eventDetail.finishingPosition"
+              name="finishingPosition"
+              type="number"
+              class="form-control"
+              min="1"
+              max="32676"
+              #finishingPosition="ngModel"
+              [ngClass]="{ 'is-invalid': finishingPosition.touched && finishingPosition.errors }"
+              [ngClass]="{ 'is-valid': finishingPosition.touched && finishingPosition.valid }"
+            />
+            <div class="invalid-feedback" *ngIf="finishingPosition.touched && finishingPosition.errors">
+              <div *ngIf="finishingPosition.hasError('required')">Finishing position is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form-check">
+        <input
+          [(ngModel)]="eventDetail.firstTimer"
+          name="firstTimer"
+          type="checkbox"
+          class="form-check-input"
+          #firstTimer="ngModel"
+          [ngClass]="{ 'is-invalid': firstTimer.touched && firstTimer.errors }"
+          [ngClass]="{ 'is-valid': firstTimer.touched && firstTimer.valid }">
+        <label class="form-check-label" for="auevClose">First timer</label>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="card-link btn btn-primary" [disabled]="ef.invalid || ef.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
+    </div>
+  </form>
+</div>

@@ -20,6 +20,10 @@ export class EventService {
     return this.http.get<Event>(`${this.url}/${id}`);
   }
 
+  isNameValid(name: string): Observable<boolean>{
+    return this.http.get<boolean>(`${this.url}/isNameValid/${name}`);
+  }
+
   create(event: Event): Observable<Event> {
     return this.http.post<Event>(this.url, JSON.stringify(event));
   }

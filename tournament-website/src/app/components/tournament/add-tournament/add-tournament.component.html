@@ -14,12 +14,14 @@
               class="form-control"
               minlength="1"
               maxlength="200"
+              appNameExists [type]="'Tournament'"
               #tn="ngModel"
               [ngClass]="{ 'is-invalid': tn.touched && tn.errors }"
               [ngClass]="{ 'is-valid': tn.touched && tn.valid }"
             />
             <div class="invalid-feedback" *ngIf="tn.touched && tn.errors">
               <div *ngIf="tn.hasError('required')">Tournament name is required.</div>
+              <div *ngIf="tn.hasError('duplicateName')">{{tn.errors.duplicateName}}</div>
             </div>
           </div>
         </div>
