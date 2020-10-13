@@ -17,9 +17,12 @@ export class AddTournamentComponent implements OnInit {
   constructor(private tournamentService: TournamentService,  private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params.id && Number(this.route.snapshot.params.id)){
+    if (this.route.snapshot.params.id){
       this.isUpdate = true;
       this.tournamentService.get(this.route.snapshot.params.id).subscribe(t => this.tournament = t);
+    }
+    else{
+      this.tournament = {};
     }
   }
 

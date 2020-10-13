@@ -1,0 +1,42 @@
+<div class="card mt-2 ml-2 mr-2">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 offset-3">
+        <div class="card ml-2 mt-2 mr-2 shadow rounded">
+          <div class="card-header bg-dark text-white">Event</div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Event name
+                <span class="badge badge-dark badge-pill">{{event?.eventName}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Event number
+                <span class="badge badge-success badge-pill">{{event?.eventNumber}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Event start date
+                <span class="badge badge-warning badge-pill">{{event?.eventDateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Event end date
+                <span class="badge badge-danger badge-pill">{{event?.eventEndDateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Auto close
+                <span class="badge badge-info badge-pill" *ngIf="event?.autoClose">
+                  <i class="fas fas fa-check"></i>
+                </span>
+                <span class="badge badge-info badge-pill" *ngIf="!event?.autoClose">
+                  <i class="fas fas fas fa-times"></i>
+                </span>
+              </li>
+              
+            </ul>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,7 +26,9 @@ export class AddEventDetailsComponent implements OnInit {
       this.isUpdate = true;
       this.eventDetailService.get(this.route.snapshot.params.id).subscribe(e => this.eventDetail = e);
     }
-
+    else{
+      this.eventDetail = {};
+    }
     this.eventService.getAll().subscribe(e => this.events = e);
   }
 

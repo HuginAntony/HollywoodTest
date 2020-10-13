@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="row" *ngIf="events$ | async as events">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let event of events">
-          <div class="card ml-2 mt-2 mr-2 shadow rounded" role="button" [routerLink]="'/event/' + event.eventId">
+          <div class="card ml-2 mt-2 mr-2 shadow rounded" role="button" [routerLink]="'/event/' + event.eventId + '/edit'">
             <div class="card-header bg-dark text-white">Event</div>
             <div class="card-body">
               <ul class="list-group list-group-flush">

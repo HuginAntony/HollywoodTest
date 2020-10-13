@@ -2,7 +2,7 @@ import { LoginRequest } from './../models/login-request.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
@@ -64,5 +64,13 @@ export class AuthService {
 
   get user$(): Observable<User> {
     return this.user.asObservable();
+  }
+
+  isInRole(requiredRoles: string[] = []): Observable<boolean> {
+    return this.user$.pipe(map((user) => requiredRoles.includes(user.roleName)));
+  }
+
+  get isAuthenticated(): Observable<boolean> {
+    return this.user.asObservable().pipe(map((user) => !!user));
   }
 }

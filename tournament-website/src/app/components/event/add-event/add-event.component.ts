@@ -28,9 +28,12 @@ export class AddEventComponent implements OnInit {
     endDate.setDate(endDate.getDate() + 1);
     this.minEndDate = endDate.toJSON().slice(0, 10);
 
-    if (this.route.snapshot.params.id && Number(this.route.snapshot.params.id)){
+    if (this.route.snapshot.params.id){
       this.isUpdate = true;
       this.eventService.get(this.route.snapshot.params.id).subscribe(e => this.event = e);
+    }
+    else{
+      this.event = {};
     }
 
     this.tournamentService.getAll().subscribe(t => this.tournaments = t);

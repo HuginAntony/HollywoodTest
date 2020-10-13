@@ -28,16 +28,25 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 409) {
             return throwError(error);
-          }
+        }
 
-        if (error.status === 0 || error.status === 500) {
+        if (error.status === 0){
+          Swal.fire(
+            'Something went wrong!',
+            'An unexpected error occured. Please contact the system administrator for more details.',
+            'error'
+          );
+          return throwError(error);
+        }
+
+        if (error.status === 500) {
             Swal.fire(
               'Something went wrong!',
               'An unexpected error occured. Please contact the system administrator for more details.',
               'error'
             );
             return;
-          }
+        }
 
         if (error && typeof error === 'object') {
             // API validation problem detail
