@@ -24,7 +24,7 @@ namespace Tournament.DataAccess.ModelConfigurations
             entity.Property(e => e.EventDetailNumber);
 
             entity.Property(e => e.EventDetailOdd)
-                .HasColumnType("decimal(38, 7)");
+                .HasColumnType("decimal(18, 7)");
 
             entity.Property(e => e.FinishingPosition);
             ;

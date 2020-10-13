@@ -31,7 +31,7 @@ namespace Tournament.WebApi.Controllers
         public async Task<IActionResult> GetAllEventDetails()
         {
             var events = await _eventDetailRepository.LazyGetAll().ToListAsync();
-            return Ok(_mapper.Map<List<EventResponse>>(events));
+            return Ok(_mapper.Map<List<EventDetailResponse>>(events));
         }
 
         [HttpGet]

@@ -47,6 +47,18 @@ namespace Tournament.WebApi.Controllers
             return Ok(_mapper.Map<TournamentResponse>(tournament));
         }
 
+        [HttpGet]
+        [Route("isNameValid/{name}")]
+        public async Task<IActionResult> IsNameValid(string name)
+        {
+            var tournament = await _tournamentRepository.LazyGet(t => t.TournamentName == name).SingleOrDefaultAsync();
+
+            if (tournament == null)
+                return Ok(true);
+
+            return Ok(false);
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(TournamentResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
