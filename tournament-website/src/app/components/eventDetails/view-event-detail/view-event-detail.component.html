@@ -1,34 +1,33 @@
 <div class="card mt-2 ml-2 mr-2">
-  <div class="card-header bg-dark text-white">All Event Details</div>
   <div class="card-body">
-    <div class="row" *ngIf="eventDetails$ | async as eventDetails">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let eventDetail of eventDetails">
-        <div class="card ml-2 mt-2 mr-2 shadow rounded" role="button" [routerLink]="'/eventDetail/' + eventDetail.eventDetailId + '/edit'">
+    <div class="row">
+      <div class="col-md-6 offset-3">
+        <div class="card ml-2 mt-2 mr-2 shadow rounded">
           <div class="card-header bg-dark text-white">Event Detail</div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Event name
-                <span class="badge badge-dark badge-pill">{{eventDetail.eventDetailName}}</span>
+                <span class="badge badge-dark badge-pill">{{eventDetail?.eventDetailName}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Event detail number
-                <span class="badge badge-success badge-pill">{{eventDetail.eventDetailNumber}}</span>
+                <span class="badge badge-success badge-pill">{{eventDetail?.eventDetailNumber}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Event detail odd
-                <span class="badge badge-warning badge-pill">{{eventDetail.eventDetailOdd}}</span>
+                <span class="badge badge-warning badge-pill">{{eventDetail?.eventDetailOdd}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Status
-                <span class="badge badge-danger badge-pill">{{eventDetailStatus[eventDetail.eventDetailStatusId]}}</span>
+                <span class="badge badge-danger badge-pill">{{eventDetailStatus[eventDetail?.eventDetailStatusId]}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 First timer
-                <span class="badge badge-info badge-pill" *ngIf="eventDetail.firstTimer">
+                <span class="badge badge-info badge-pill" *ngIf="eventDetail?.firstTimer">
                   <i class="fas fas fa-check"></i>
                 </span>
-                <span class="badge badge-info badge-pill" *ngIf="!eventDetail.firstTimer">
+                <span class="badge badge-info badge-pill" *ngIf="!eventDetail?.firstTimer">
                   <i class="fas fas fa-times"></i>
                 </span>
               </li>
@@ -37,7 +36,6 @@
           <div class="card-footer"></div>
         </div>
       </div>
-      <div class="col-sm-4 ml-3 mb-2" *ngIf="!eventDetails.length">This list is empty</div>
     </div>
   </div>
 </div>

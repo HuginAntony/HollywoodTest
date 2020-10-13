@@ -22,7 +22,7 @@ export class AddEventDetailsComponent implements OnInit {
               private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params.id && Number(this.route.snapshot.params.id)){
+    if (this.route.snapshot.params.id){
       this.isUpdate = true;
       this.eventDetailService.get(this.route.snapshot.params.id).subscribe(e => this.eventDetail = e);
     }
@@ -44,7 +44,7 @@ export class AddEventDetailsComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/eventDetail'], { relativeTo: this.route });
   }
 
   handleSuccess(): void{
@@ -54,6 +54,6 @@ export class AddEventDetailsComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500
     });
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/eventDetail'], { relativeTo: this.route });
   }
 }
