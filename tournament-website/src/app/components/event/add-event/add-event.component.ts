@@ -1,11 +1,12 @@
-import { Event } from 'src/app/models/event.model';
+import { Event } from 'src/app/shared/models/event.model';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from 'src/app/services/event.service';
-import { TournamentService } from 'src/app/services/tournament.service';
+import { EventService } from 'src/app/shared/services/event.service';
+import { TournamentService } from 'src/app/shared/services/tournament.service';
+import { Tournament } from 'src/app/shared/models/tournament.model';
 import Swal from 'sweetalert2';
-import { Tournament } from 'src/app/models/tournament.model';
+
 
 @Component({
   selector: 'app-add-event',

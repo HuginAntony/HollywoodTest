@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Tournament } from 'src/app/models/tournament.model';
-import { TournamentService } from 'src/app/services/tournament.service';
+import { Tournament } from 'src/app/shared/models/tournament.model';
+import { TournamentService } from 'src/app/shared/services/tournament.service';
 
 @Component({
   selector: 'app-add-tournament',

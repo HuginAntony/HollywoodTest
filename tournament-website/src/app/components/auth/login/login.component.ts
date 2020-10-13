@@ -2,8 +2,8 @@ import Swal from 'sweetalert2';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginRequest } from 'src/app/models/login-request.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { LoginRequest } from 'src/app/shared/models/login-request.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',

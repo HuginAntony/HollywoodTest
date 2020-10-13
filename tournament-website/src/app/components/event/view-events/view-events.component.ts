@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Event } from 'src/app/models/event.model';
-import { EventService } from 'src/app/services/event.service';
+import { Event } from 'src/app/shared/models/event.model';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-view-events',

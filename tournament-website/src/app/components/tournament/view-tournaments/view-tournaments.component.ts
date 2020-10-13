@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tournament } from 'src/app/models/tournament.model';
-import { TournamentService } from 'src/app/services/tournament.service';
+import { Tournament } from 'src/app/shared/models/tournament.model';
+import { TournamentService } from 'src/app/shared/services/tournament.service';
+
 
 @Component({
   selector: 'app-view-tournaments',

@@ -5,8 +5,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',

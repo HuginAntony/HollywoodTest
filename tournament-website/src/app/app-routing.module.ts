@@ -4,15 +4,15 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+    loadChildren: () => import('./components/auth/auth.module').then((m) => m.AuthModule)
   },
   {
     path: 'tournament',
-    loadChildren: () => import('./tournament/tournament.module').then((m) => m.TournamentModule)
+    loadChildren: () => import('./components/tournament/tournament.module').then((m) => m.TournamentModule)
   },
   {
     path: 'event',
-    loadChildren: () => import('./event/event.module').then((m) => m.EventModule),
+    loadChildren: () => import('./components/event/event.module').then((m) => m.EventModule),
   },
   {
     path: '**',
