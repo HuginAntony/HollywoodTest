@@ -16,7 +16,7 @@
               [ngClass]="{ 'is-invalid': to.touched && to.errors }"
               [ngClass]="{ 'is-valid': to.touched && to.valid }"
             >
-              <option [value]="''">Please Select</option>
+              <option [value]="'0'">Please Select</option>
               <option *ngFor="let t of tournaments" [value]="t.tournamentId">{{ t.tournamentName }}</option>
             </select>
             <div class="invalid-feedback" *ngIf="to.touched && to.errors">
@@ -135,6 +135,7 @@
     </div>
     <div class="card-footer">
       <button type="submit" class="card-link btn btn-primary" [disabled]="ef.invalid || ef.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="deleteEvent()" *ngIf="isUpdate">Delete</div>
       <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
     </div>
   </form>

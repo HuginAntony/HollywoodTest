@@ -13,10 +13,11 @@
               #ev
               id="eventId"
               name="eventId"
+              
               [ngClass]="{ 'is-invalid': ev.touched && ev.errors }"
               [ngClass]="{ 'is-valid': ev.touched && ev.valid }"
             >
-              <option [value]="''">Please Select</option>
+              <option [value]="'0'">Please Select</option>
               <option *ngFor="let e of events" [value]="e.eventId">{{ e.eventName }}</option>
             </select>
             <div class="invalid-feedback" *ngIf="ev.touched && ev.errors">
@@ -52,21 +53,43 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
+            <label>Event detail status</label>
+            <select
+              required
+              [(ngModel)]="eventDetail.eventDetailStatusId"
+              class="form-control"
+              #ev
+              id="eventDetailStatus"
+              name="eventDetailStatus"
+              [ngClass]="{ 'is-invalid': ev.touched && ev.errors }"
+              [ngClass]="{ 'is-valid': ev.touched && ev.valid }"
+            >
+            <option *ngFor="let key of statusKeys" [value]="key" [label]="eventStatusName[key]"></option>
+            </select>
+            <div class="invalid-feedback" *ngIf="ev.touched && ev.errors">
+              <div *ngIf="ev.hasError('required')">Event detail status is required.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
             <label>Event detail number</label>
             <input
               required
-              [(ngModel)]="eventDetail.finishingPosition"
-              name="finishingPosition"
+              [(ngModel)]="eventDetail.eventDetailNumber"
+              name="eventDetailNumber"
               type="number"
               class="form-control"
               min="1"
               max="32676"
-              #finishingPosition="ngModel"
-              [ngClass]="{ 'is-invalid': finishingPosition.touched && finishingPosition.errors }"
-              [ngClass]="{ 'is-valid': finishingPosition.touched && finishingPosition.valid }"
+              #eventDetailNumber="ngModel"
+              [ngClass]="{ 'is-invalid': eventDetailNumber.touched && eventDetailNumber.errors }"
+              [ngClass]="{ 'is-valid': eventDetailNumber.touched && eventDetailNumber.valid }"
             />
-            <div class="invalid-feedback" *ngIf="finishingPosition.touched && finishingPosition.errors">
-              <div *ngIf="finishingPosition.hasError('required')">Event number is required.</div>
+            <div class="invalid-feedback" *ngIf="eventDetailNumber.touched && eventDetailNumber.errors">
+              <div *ngIf="eventDetailNumber.hasError('required')">Event number is required.</div>
             </div>
           </div>
         </div>
@@ -77,19 +100,20 @@
             <label>Event detail odd</label>
             <input
               required
-              [(ngModel)]="eventDetail.finishingPosition"
-              name="finishingPosition"
+              [(ngModel)]="eventDetail.eventDetailOdd"
+              name="eventDetailOdd"
               type="number"
               class="form-control"
               min="1"
               max="32676"
               maxlength="26"
-              #finishingPosition="ngModel"
-              [ngClass]="{ 'is-invalid': finishingPosition.touched && finishingPosition.errors }"
-              [ngClass]="{ 'is-valid': finishingPosition.touched && finishingPosition.valid }"
+              required
+              #eventDetailOdd="ngModel"
+              [ngClass]="{ 'is-invalid': eventDetailOdd.touched && eventDetailOdd.errors }"
+              [ngClass]="{ 'is-valid': eventDetailOdd.touched && eventDetailOdd.valid }"
             />
-            <div class="invalid-feedback" *ngIf="finishingPosition.touched && finishingPosition.errors">
-              <div *ngIf="finishingPosition.hasError('required')">Event detail odd is required.</div>
+            <div class="invalid-feedback" *ngIf="eventDetailOdd.touched && eventDetailOdd.errors">
+              <div *ngIf="eventDetailOdd.hasError('required')">Event detail odd is required.</div>
             </div>
           </div>
         </div>
@@ -130,6 +154,7 @@
     </div>
     <div class="card-footer">
       <button type="submit" class="card-link btn btn-primary" [disabled]="ef.invalid || ef.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="deleteEventDetail()" *ngIf="isUpdate">Delete</div>
       <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
     </div>
   </form>

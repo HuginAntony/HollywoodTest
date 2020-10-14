@@ -20,7 +20,6 @@ import { EventService } from '../services/event.service';
 
     validate(control: AbstractControl): Observable<ValidationErrors | null> {
       const val = control.value;
-      console.log('Type' + this.type);
       if (this.type === 'Tournament'){
         const obs = this.tournamentService.isNameValid(val).pipe(
           map((res) => {

@@ -28,11 +28,15 @@ export class EventDetailsService {
     return this.http.post<EventDetail>(this.url, JSON.stringify(eventDetail));
   }
 
-  update(id: string, eventDetail: EventDetail): Observable<EventDetail>{
+  update(id: number, eventDetail: EventDetail): Observable<EventDetail>{
     return this.http.put<EventDetail>(`${this.url}/${id}`, JSON.stringify(eventDetail));
   }
 
-  delete(id: string): Observable<ArrayBuffer>  {
-    return this.http.delete(`${this.url}/${id}`, null);
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  deleteMany(ids: Array<number>): Observable<any>{
+    return this.http.post(`${this.url}/deleteMany`, JSON.stringify(ids));
   }
 }

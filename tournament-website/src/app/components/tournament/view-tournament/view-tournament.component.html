@@ -1,0 +1,66 @@
+<div class="card mt-2 ml-2 mr-2">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 offset-3">
+        <div class="card ml-2 mt-2 mr-2 shadow rounded">
+          <div class="card-header bg-dark text-white"><span>Tournament</span>
+            <a class="float-right" *ngIf="(user$ | async).roleName === roles.Admin">
+              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/event/'+ tournament.tournamentId + '/edit']"></i>
+            </a>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Tournament name
+                <span class="badge badge-primary badge-success">{{tournament.tournamentName}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-2">
+  <div class="card-header bg-dark text-white">Tournament Events</div>
+  <ng-container *ngIf="events$ | async as events">
+  <div class="card-body" *ngIf="events.length === 0">
+    No events found
+  </div>  
+  <div class="card-body" *ngIf="events.length > 0">
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Event name</th>
+            <th>Event number</th>
+            <th>Event date</th>
+            <th>Action</th>
+            <th><input class="mr-2" name="chkSelectAll" type="checkbox" (change)="selectAll($event.target.checked)">
+              Select All</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td>{{event.eventName}}</td>
+            <td>
+              {{event.eventNumber}}
+            </td>
+            <td>
+              {{event.eventDateTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+            <td>
+              <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ event.eventId]"></i></a>
+            </td>
+            <td><input class="event-checkbox" name="{{event.eventId}}" type="checkbox" (change)="onChange(event.eventId, $event.target.checked)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <div class="card-link btn btn-primary" (click)="deleteEvents()" *ngIf="events && eventsToDelete.length > 0">Delete Selected</div>
+    </div>
+  </ng-container>
+  </div>
+

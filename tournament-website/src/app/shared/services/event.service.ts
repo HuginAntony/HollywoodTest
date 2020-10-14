@@ -1,7 +1,9 @@
+import { EventDetail } from 'src/app/shared/models/event-detail.model';
+import { Event } from 'src/app/shared/models/event.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Event } from '../models/event.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,10 @@ export class EventService {
     return this.http.get<Event>(`${this.url}/${id}`);
   }
 
+  getEventDetailsByEvent(eventId: number): Observable<EventDetail[]> {
+    return this.http.get<EventDetail[]>(`${this.url}/${eventId}/eventDetails`);
+  }
+
   isNameValid(name: string): Observable<boolean>{
     return this.http.get<boolean>(`${this.url}/isNameValid/${name}`);
   }
@@ -28,11 +34,15 @@ export class EventService {
     return this.http.post<Event>(this.url, JSON.stringify(event));
   }
 
-  update(id: string, event: Event): Observable<Event>{
+  update(id: number, event: Event): Observable<Event>{
     return this.http.put<Event>(`${this.url}/${id}`, JSON.stringify(event));
   }
 
-  delete(id: string): Observable<ArrayBuffer>  {
-    return this.http.delete(`${this.url}/${id}`, null);
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  deleteMany(ids: Array<number>): Observable<any>{
+    return this.http.post(`${this.url}/deleteMany`, JSON.stringify(ids));
   }
 }

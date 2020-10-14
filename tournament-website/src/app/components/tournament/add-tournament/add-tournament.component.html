@@ -29,6 +29,7 @@
     </div>
     <div class="card-footer">
       <button type="submit" class="card-link btn btn-primary" [disabled]="u.invalid || u.pristine">Save</button>
+      <div class="card-link btn btn-primary" (click)="deleteTournament()" *ngIf="isUpdate">Delete</div>
       <div class="card-link btn btn-primary" (click)="cancel()">Cancel</div>
     </div>
   </form>

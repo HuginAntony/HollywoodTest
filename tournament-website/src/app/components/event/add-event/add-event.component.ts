@@ -33,7 +33,9 @@ export class AddEventComponent implements OnInit {
       this.eventService.get(this.route.snapshot.params.id).subscribe(e => this.event = e);
     }
     else{
-      this.event = {};
+      this.event = {
+        tournamentId: 0
+      };
     }
 
     this.tournamentService.getAll().subscribe(t => this.tournaments = t);
@@ -42,12 +44,12 @@ export class AddEventComponent implements OnInit {
   saveChanges(form: NgForm): void {
     if (this.isUpdate){
       this.eventService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
-        this.handleSuccess();
+        this.handleSuccess('Event successfully updated.');
       });
     }
     else{
       this.tournamentService.create(form.value).subscribe(() => {
-        this.handleSuccess();
+        this.handleSuccess('Event successfully created.');
       });
     }
   }
@@ -56,10 +58,16 @@ export class AddEventComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  handleSuccess(): void{
+  deleteEvent(): void {
+    this.eventService.delete(this.event.eventId).subscribe(() => {
+      this.handleSuccess('Event detail successfully deleted.');
+    });
+  }
+
+  handleSuccess(message: string): void{
     Swal.fire({
       icon: 'success',
-      title: 'Event successfully saved.',
+      title: message,
       showConfirmButton: false,
       timer: 1500
     });

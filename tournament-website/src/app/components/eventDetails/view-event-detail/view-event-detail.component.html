@@ -2,8 +2,12 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-6 offset-3">
-        <div class="card ml-2 mt-2 mr-2 shadow rounded">
-          <div class="card-header bg-dark text-white">Event Detail</div>
+        <div class="card ml-2 mt-2 mr-2 shadow rounded">        
+          <div class="card-header bg-dark text-white"><span>Event Detail</span>
+            <a class="float-right" *ngIf="(user$ | async).roleName === roles.Admin">
+              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/event/'+ eventDetail.eventDetailId + '/edit']"></i>
+            </a>
+          </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center">

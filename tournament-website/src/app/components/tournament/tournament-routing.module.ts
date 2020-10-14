@@ -4,6 +4,7 @@ import { Roles } from 'src/app/shared/enums/roles.enum';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { RoleGuard } from 'src/app/shared/guards/role.guard';
 import { AddTournamentComponent } from './add-tournament/add-tournament.component';
+import { ViewTournamentComponent } from './view-tournament/view-tournament.component';
 import { ViewTournamentsComponent } from './view-tournaments/view-tournaments.component';
 
 const routes: Routes = [
@@ -19,6 +20,12 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: [Roles.Admin] }
   },
+  {
+    path: ':id',
+    component: ViewTournamentComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [Roles.Admin, Roles.User] }
+},
   {
     path: ':id/edit',
     component: AddTournamentComponent,

@@ -49,21 +49,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         if (error && typeof error === 'object') {
-            // API validation problem detail
-            if (error?.error?.detail) {
-              Swal.fire({
-                icon: 'error',
-                title: '',
-                text: error.error.detail,
-              });
-            } else {
               // Management API model state errors
               let modelStateErrors = '';
 
               if (error?.error?.errors) {
                 for (const key in error.error.errors) {
                   if (error.error.errors[key]) {
-                    modelStateErrors += `<p>${error.error.errors[key]}</p>`;
+                    modelStateErrors += `<p>${error.error.errors[key].error}</p>`;
                   }
                 }
               }
@@ -98,7 +90,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                   html: modelStateErrors,
                 });
               }
-            }
+            
 
             return throwError(error || 'Server Error');
           }

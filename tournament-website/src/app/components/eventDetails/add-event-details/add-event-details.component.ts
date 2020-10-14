@@ -1,3 +1,4 @@
+import { EventDetailStatusNames } from './../../../shared/enums/eventDetailStatusNames.enum';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,30 +18,37 @@ export class AddEventDetailsComponent implements OnInit {
   eventDetail: EventDetail = {};
   events: Event[];
   isUpdate = false;
+  eventStatusName = EventDetailStatusNames;
+  statusKeys: string[];
 
   constructor(private eventService: EventService, private eventDetailService: EventDetailsService,
               private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.statusKeys = Object.keys(this.eventStatusName).filter((f) => !isNaN(Number(f)));
+
     if (this.route.snapshot.params.id){
       this.isUpdate = true;
       this.eventDetailService.get(this.route.snapshot.params.id).subscribe(e => this.eventDetail = e);
     }
     else{
-      this.eventDetail = {};
+      this.eventDetail = {
+        eventId: 0,
+        eventDetailStatusId: this.eventStatusName.Active
+      };
     }
     this.eventService.getAll().subscribe(e => this.events = e);
   }
 
   saveChanges(form: NgForm): void {
     if (this.isUpdate){
-      this.eventService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
-        this.handleSuccess();
+      this.eventDetailService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
+        this.handleSuccess('Event detail successfully updated.');
       });
     }
     else{
       this.eventDetailService.create(form.value).subscribe(() => {
-        this.handleSuccess();
+        this.handleSuccess('Event detail successfully created.');
       });
     }
   }
@@ -49,10 +57,16 @@ export class AddEventDetailsComponent implements OnInit {
     this.router.navigate(['/eventDetail'], { relativeTo: this.route });
   }
 
-  handleSuccess(): void{
+  deleteEventDetail(): void {
+    this.eventDetailService.delete(this.eventDetail.eventDetailId).subscribe(() => {
+      this.handleSuccess('Event detail successfully deleted.');
+    });
+  }
+
+  handleSuccess(message: string): void{
     Swal.fire({
       icon: 'success',
-      title: 'Event detail successfully saved.',
+      title: message,
       showConfirmButton: false,
       timer: 1500
     });
