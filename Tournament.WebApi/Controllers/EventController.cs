@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -17,12 +18,14 @@ namespace Tournament.WebApi.Controllers
     public class EventController : ControllerBase
     {
         private readonly IRepository<Event> _eventRepository;
+        private readonly IRepository<EventDetail> _eventDetailRepository;
         private readonly IUnitOfWork<HollywoodDbContext> _unitOfWork;
         private readonly IMapper _mapper;
 
-        public EventController(IRepository<Event> eventRepository, IUnitOfWork<HollywoodDbContext> unitOfWork, IMapper mapper)
+        public EventController(IRepository<Event> eventRepository, IRepository<EventDetail> eventDetailRepository, IUnitOfWork<HollywoodDbContext> unitOfWork, IMapper mapper)
         {
             _eventRepository = eventRepository;
+            _eventDetailRepository = eventDetailRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -32,6 +35,14 @@ namespace Tournament.WebApi.Controllers
         {
             var events = await _eventRepository.LazyGetAll().ToListAsync();
             return Ok(_mapper.Map<List<EventResponse>>(events));
+        }
+
+        [HttpGet]
+        [Route("{eventId}/eventDetails")]
+        public async Task<IActionResult> GetEventDetails(long eventId)
+        {
+            var events = await _eventDetailRepository.LazyGet(e => e.EventId == eventId).ToListAsync();
+            return Ok(_mapper.Map<List<EventDetailResponse>>(events));
         }
 
         [HttpGet]
@@ -111,6 +122,25 @@ namespace Tournament.WebApi.Controllers
 
 
             _eventRepository.Delete(thisEvent);
+
+            await _unitOfWork.CommitAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("deleteMany")]
+        public async Task<IActionResult> DeleteManyEvents(long[] ids)
+        {
+            var events = await _eventRepository.LazyGet(t => ids.Contains(t.EventId)).ToListAsync();
+
+            if (events.Count == 0)
+                return NotFound();
+
+            foreach (var e in events)
+            {
+                _eventRepository.Delete(e);
+            }
 
             await _unitOfWork.CommitAsync();
 

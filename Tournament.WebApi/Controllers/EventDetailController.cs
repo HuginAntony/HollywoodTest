@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -86,6 +87,11 @@ namespace Tournament.WebApi.Controllers
             if (thisEventDetail == null)
                 return NotFound();
 
+            if (thisEventDetail.EventDetailStatus.EventDetailStatusName != EventDetailStatusNames.Active)
+            {
+                return BadRequest("You can only update an Event that is active.");
+            }
+
             thisEventDetail.EventId = EventDetailRequest.EventId;
             thisEventDetail.EventDetailName = EventDetailRequest.EventDetailName;
             thisEventDetail.EventDetailNumber = EventDetailRequest.EventDetailNumber;
@@ -111,6 +117,25 @@ namespace Tournament.WebApi.Controllers
                 return NotFound();
 
             _eventDetailRepository.Delete(thisEventDetail);
+
+            await _unitOfWork.CommitAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("deleteMany")]
+        public async Task<IActionResult> DeleteManyEventDetailss(long[] ids)
+        {
+            var events = await _eventDetailRepository.LazyGet(t => ids.Contains(t.EventDetailId)).ToListAsync();
+
+            if (events.Count == 0)
+                return NotFound();
+
+            foreach (var e in events)
+            {
+                _eventDetailRepository.Delete(e);
+            }
 
             await _unitOfWork.CommitAsync();
 

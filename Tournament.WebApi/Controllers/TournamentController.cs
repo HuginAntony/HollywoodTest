@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,22 +9,26 @@ using Microsoft.EntityFrameworkCore;
 using Tournament.Core.Models;
 using Tournament.DataAccess;
 using Tournament.DataAccess.Interfaces;
+using Tournament.DataAccess.Models;
 
 namespace Tournament.WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("[controller]")]
     [Produces("application/json")]
     public class TournamentController : ControllerBase
     {
         private readonly IRepository<DataAccess.Models.Tournament> _tournamentRepository;
+        private readonly IRepository<Event> _eventRepository;
         private readonly IUnitOfWork<HollywoodDbContext> _unitOfWork;
         private readonly IMapper _mapper;
 
-        public TournamentController(IRepository<DataAccess.Models.Tournament> tournamentRepository, IUnitOfWork<HollywoodDbContext> unitOfWork, IMapper mapper)
+        public TournamentController(IRepository<DataAccess.Models.Tournament> tournamentRepository, IRepository<Event> eventRepository,
+            IUnitOfWork<HollywoodDbContext> unitOfWork, IMapper mapper)
         {
             _tournamentRepository = tournamentRepository;
+            _eventRepository = eventRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -33,6 +38,14 @@ namespace Tournament.WebApi.Controllers
         {
             var tournaments = await _tournamentRepository.LazyGetAll().ToListAsync();
             return Ok(_mapper.Map<List<TournamentResponse>>(tournaments));
+        }
+
+        [HttpGet]
+        [Route("{tournamentId}/events")]
+        public async Task<IActionResult> GetEvents(long tournamentId)
+        {
+            var events = await _eventRepository.LazyGet(e => e.TournamentId == tournamentId).ToListAsync();
+            return Ok(_mapper.Map<List<EventResponse>>(events));
         }
 
         [HttpGet]
@@ -99,12 +112,19 @@ namespace Tournament.WebApi.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteTournament(long id)
         {
-            var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id).SingleOrDefaultAsync();
+            var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id)
+                                                            .Include(t => t.Events)
+                                                            .SingleOrDefaultAsync();
 
             if (thisTournament == null)
                 return NotFound();
 
-            
+
+            if (thisTournament.Events.Any())
+            {
+                return BadRequest("This tournament has events associated with it and cannot be deleted");
+            }
+
             _tournamentRepository.Delete(thisTournament);
 
             await _unitOfWork.CommitAsync();
