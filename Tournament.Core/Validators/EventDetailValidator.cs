@@ -9,38 +9,38 @@ namespace Tournament.Core.Validators
         {
             RuleFor(x => x.EventId)
                 .NotEmpty()
-                .WithMessage("eventId is required.")
+                .WithMessage("Event is required.")
                 .OverridePropertyName("eventId");
 
             RuleFor(x => x.EventDetailStatusId)
                 .NotEmpty()
-                .WithMessage("eventDetailStatusId is required.")
+                .WithMessage("Event detail status is required.")
                 .OverridePropertyName("eventDetailStatusId");
 
             RuleFor(x => x.EventDetailName)
                 .MaximumLength(50)
                 .NotEmpty()
-                .WithMessage("eventDetailName is required.")
+                .WithMessage("Event detail name is required.")
                 .OverridePropertyName("eventDetailName");
 
             RuleFor(x => x.EventDetailNumber)
                 .NotEmpty()
-                .WithMessage("eventDetailNumber is required.")
+                .WithMessage("Event detail number is required.")
                 .OverridePropertyName("eventDetailNumber");
 
             RuleFor(x => x.EventDetailOdd)
                 .NotEmpty()
-                .WithMessage("eventDetailOdd is required.")
+                .WithMessage("Event detail odd is required.")
                 .OverridePropertyName("eventDetailOdd");
 
             RuleFor(x => x.FinishingPosition)
                 .NotEmpty()
-                .WithMessage("finishingPosition is required.")
+                .WithMessage("Finishing position is required.")
                 .OverridePropertyName("finishingPosition");
 
             RuleFor(x => x.FirstTimer)
                 .NotEmpty()
-                .WithMessage("firstTimer is required.")
+                .WithMessage("First timer is required.")
                 .OverridePropertyName("firstTimer");
         }
     }

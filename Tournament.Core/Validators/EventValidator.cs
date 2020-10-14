@@ -13,23 +13,23 @@ namespace Tournament.Core.Validators
             
             RuleFor(x => x.TournamentId)
                 .NotEmpty()
-                .WithMessage("tournamentId is required.")
+                .WithMessage("Tournament is required.")
                 .OverridePropertyName("tournamentId");
 
             RuleFor(x => x.EventName)
                 .MaximumLength(100)
                 .NotEmpty()
-                .WithMessage("eventName is required.")
+                .WithMessage("Event name is required.")
                 .OverridePropertyName("eventName");
 
             RuleFor(x => x.EventNumber)
                 .NotEmpty()
-                .WithMessage("eventNumber is required.")
+                .WithMessage("Event number is required.")
                 .OverridePropertyName("eventNumber");
 
             RuleFor(x => x.EventDateTime)
                 .NotEmpty()
-                .WithMessage("eventDateTime is required.")
+                .WithMessage("Event date is required.")
                 .OverridePropertyName("eventDateTime");
 
             RuleFor(x => x.EventDateTime)
@@ -37,12 +37,12 @@ namespace Tournament.Core.Validators
                 {
                     eventDateTime = d;
                     if (d.Date <= DateTime.Now.Date.AddDays(-1))
-                        context.AddFailure(new ValidationFailure("eventDateTime", $"eventDateTime cannot be before today"));
+                        context.AddFailure(new ValidationFailure("eventDateTime", $"Event date cannot be before today"));
                 });
 
             RuleFor(x => x.EventEndDateTime)
                 .NotEmpty()
-                .WithMessage("eventEndDateTime is required.")
+                .WithMessage("Event end date is required.")
                 .OverridePropertyName("eventEndDateTime");
 
             RuleFor(x => x.EventDateTime)
@@ -50,12 +50,12 @@ namespace Tournament.Core.Validators
                 {
                     
                     if (d.Date <= eventDateTime.Date)
-                        context.AddFailure(new ValidationFailure("eventEndDateTime", $"eventEndDateTime cannot be before the eventDateTime"));
+                        context.AddFailure(new ValidationFailure("eventEndDateTime", $"Event end date  cannot be before the eventDateTime"));
                 });
 
             RuleFor(x => x.AutoClose)
                 .NotEmpty()
-                .WithMessage("autoClose is required.")
+                .WithMessage("Auto close is required.")
                 .OverridePropertyName("autoClose");
         }
     }

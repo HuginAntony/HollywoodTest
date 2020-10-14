@@ -10,13 +10,13 @@ namespace Tournament.Core.Validators
             RuleFor(x => x.Username)
                 .MaximumLength(256)
                 .NotEmpty()
-                .WithMessage("username is required.")
+                .WithMessage("Username is required.")
                 .OverridePropertyName("username");
 
             RuleFor(x => x.Password)
                 .MaximumLength(256)
                 .NotEmpty()
-                .WithMessage("password is required.")
+                .WithMessage("Password is required.")
                 .OverridePropertyName("password");
         }
     }
