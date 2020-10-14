@@ -56,9 +56,8 @@ namespace Tournament.WebApi
                 };
                 return new BadRequestObjectResult(result);
             });
-
-            // Add database service 
-            services.AddDbContext<HollywoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TournamentApiDB")));
+            
+            ConfigureDatabase(services);
 
             services.AddScoped<IUnitOfWork<HollywoodDbContext>, UnitOfWork<HollywoodDbContext>>();
 
@@ -115,6 +114,11 @@ namespace Tournament.WebApi
 
                 c.AddFluentValidationRules();
             });
+        }
+
+        public virtual void ConfigureDatabase(IServiceCollection services)
+        {
+            services.AddDbContext<HollywoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TournamentApiDB")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
