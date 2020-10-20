@@ -19,13 +19,13 @@ export class AddEventDetailsComponent implements OnInit {
   events: Event[];
   isUpdate = false;
   eventStatusName = EventDetailStatusNames;
-  statusKeys: string[];
+  statusKeys: number[];
 
   constructor(private eventService: EventService, private eventDetailService: EventDetailsService,
               private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.statusKeys = Object.keys(this.eventStatusName).filter((f) => !isNaN(Number(f)));
+    this.statusKeys = Object.keys(this.eventStatusName).filter((f) => !isNaN(Number(f))).map(Number);
 
     if (this.route.snapshot.params.id){
       this.isUpdate = true;
@@ -40,14 +40,14 @@ export class AddEventDetailsComponent implements OnInit {
     this.eventService.getAll().subscribe(e => this.events = e);
   }
 
-  saveChanges(form: NgForm): void {
+  saveChanges(): void {
     if (this.isUpdate){
-      this.eventDetailService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
+      this.eventDetailService.update(this.route.snapshot.params.id, this.eventDetail).subscribe(() => {
         this.handleSuccess('Event detail successfully updated.');
       });
     }
     else{
-      this.eventDetailService.create(form.value).subscribe(() => {
+      this.eventDetailService.create(this.eventDetail).subscribe(() => {
         this.handleSuccess('Event detail successfully created.');
       });
     }

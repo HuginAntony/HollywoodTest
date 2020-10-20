@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header bg-dark text-white">Add/Update Event Detail</div>
-  <form class="needs-validation" (ngSubmit)="saveChanges(ef)" #ef="ngForm">
+  <form class="needs-validation" (ngSubmit)="saveChanges()" #ef="ngForm">
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
@@ -10,18 +10,18 @@
               required
               [(ngModel)]="eventDetail.eventId"
               class="form-control"
-              #ev
+              #ev="ngModel"
               id="eventId"
               name="eventId"
-              
-              [ngClass]="{ 'is-invalid': ev.touched && ev.errors }"
-              [ngClass]="{ 'is-valid': ev.touched && ev.valid }"
+              [class.is-invalid]="ev.touched && (ev.errors || ev.value <= 0)"
+              [class.is-valid]="ev.touched && ev.valid"
             >
-              <option [value]="'0'">Please Select</option>
-              <option *ngFor="let e of events" [value]="e.eventId">{{ e.eventName }}</option>
+              <option [ngValue]="0">Please Select</option>
+              <option *ngFor="let e of events" [ngValue]="e.eventId">{{ e.eventName }}</option>
             </select>
-            <div class="invalid-feedback" *ngIf="ev.touched && ev.errors">
+            <div class="invalid-feedback" *ngIf="ev.touched && (ev.errors || ev.value <= 0)">
               <div *ngIf="ev.hasError('required')">Event is required.</div>
+              <div *ngIf="ev.value <= 0">Event is required.</div>
             </div>
           </div>
         </div>
@@ -58,16 +58,16 @@
               required
               [(ngModel)]="eventDetail.eventDetailStatusId"
               class="form-control"
-              #ev
-              id="eventDetailStatus"
-              name="eventDetailStatus"
-              [ngClass]="{ 'is-invalid': ev.touched && ev.errors }"
-              [ngClass]="{ 'is-valid': ev.touched && ev.valid }"
+              #eds="ngModel"
+              id="eventDetailStatusId"
+              name="eventDetailStatusId"
+              [ngClass]="{ 'is-invalid': eds.touched && eds.errors }"
+              [ngClass]="{ 'is-valid': eds.touched && eds.valid }"
             >
-            <option *ngFor="let key of statusKeys" [value]="key" [label]="eventStatusName[key]"></option>
+            <option *ngFor="let key of statusKeys" [ngValue]="key" [label]="eventStatusName[key]"></option>
             </select>
-            <div class="invalid-feedback" *ngIf="ev.touched && ev.errors">
-              <div *ngIf="ev.hasError('required')">Event detail status is required.</div>
+            <div class="invalid-feedback" *ngIf="eds.touched && eds.errors">
+              <div *ngIf="eds.hasError('required')">Event detail status is required.</div>
             </div>
           </div>
         </div>

@@ -41,14 +41,14 @@ export class AddEventComponent implements OnInit {
     this.tournamentService.getAll().subscribe(t => this.tournaments = t);
   }
 
-  saveChanges(form: NgForm): void {
+  saveChanges(): void {
     if (this.isUpdate){
-      this.eventService.update(this.route.snapshot.params.id, form.value).subscribe(() => {
+      this.eventService.update(this.route.snapshot.params.id, this.event).subscribe(() => {
         this.handleSuccess('Event successfully updated.');
       });
     }
     else{
-      this.tournamentService.create(form.value).subscribe(() => {
+      this.eventService.create(this.event).subscribe(() => {
         this.handleSuccess('Event successfully created.');
       });
     }

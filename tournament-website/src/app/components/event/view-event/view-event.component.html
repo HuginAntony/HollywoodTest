@@ -77,7 +77,7 @@
               {{eventDetail.finishingPosition}}
             </td>
             <td>
-              <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ eventDetail.eventDetailId]"></i></a>
+              <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ eventDetail?.eventDetailId]"></i></a>
             </td>
             <td *ngIf="(user$ | async).roleName === roles.Admin"><input class="event-checkbox" name="{{eventDetail.eventDetailId}}" type="checkbox" (change)="onChange(eventDetail.eventDetailId, $event.target.checked)"></td>
           </tr>

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header bg-dark text-white">Add/Update Event</div>
-  <form class="needs-validation" (ngSubmit)="saveChanges(ef)" #ef="ngForm">
+  <form class="needs-validation" (ngSubmit)="saveChanges()" #ef="ngForm">
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
@@ -10,17 +10,18 @@
               required
               [(ngModel)]="event.tournamentId"
               class="form-control"
-              #to
+              #to="ngModel"
               id="tournamentId"
               name="tournamentId"
-              [class.is-invalid]="to.touched && to.errors"
+              [class.is-invalid]="(to.touched && to.errors) || (to.touched && to.value <= 0)"
               [class.is-valid]="to.touched && to.valid"
             >
-              <option [value]="'0'">Please Select</option>
-              <option *ngFor="let t of tournaments" [value]="t.tournamentId">{{ t.tournamentName }}</option>
+              <option [ngValue]="0">Please Select</option>
+              <option *ngFor="let t of tournaments" [ngValue]="t.tournamentId">{{ t.tournamentName }}</option>
             </select>
-            <div class="invalid-feedback" *ngIf="to.touched && to.errors">
+            <div class="invalid-feedback" *ngIf="to.touched && (to.errors || to.value <= 0)">
               <div *ngIf="to.hasError('required')">Tournament is required.</div>
+              <div *ngIf="to.value <= 0">Tournament is required.</div>
             </div>
           </div>
         </div>
