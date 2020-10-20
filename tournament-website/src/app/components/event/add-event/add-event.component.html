@@ -13,8 +13,8 @@
               #to
               id="tournamentId"
               name="tournamentId"
-              [ngClass]="{ 'is-invalid': to.touched && to.errors }"
-              [ngClass]="{ 'is-valid': to.touched && to.valid }"
+              [class.is-invalid]="to.touched && to.errors"
+              [class.is-valid]="to.touched && to.valid"
             >
               <option [value]="'0'">Please Select</option>
               <option *ngFor="let t of tournaments" [value]="t.tournamentId">{{ t.tournamentName }}</option>
@@ -25,6 +25,7 @@
           </div>
         </div>
       </div>
+      {{to.errors|json}}
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">

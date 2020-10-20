@@ -5,7 +5,7 @@
         <div class="card ml-2 mt-2 mr-2 shadow rounded">
           <div class="card-header bg-dark text-white"><span>Event</span>
             <a class="float-right" *ngIf="(user$ | async).roleName === roles.Admin">
-              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/event/'+ event.eventId + '/edit']"></i>
+              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/event/'+ event?.eventId + '/edit']"></i>
             </a>
           </div>
           <div class="card-body">
@@ -60,7 +60,7 @@
             <th>Event detail odd</th>
             <th>Event detail finishing position</th>
             <th>Action</th>
-            <th><input class="mr-2" name="chkSelectAll" type="checkbox" (change)="selectAll($event.target.checked)">
+            <th *ngIf="(user$ | async).roleName === roles.Admin"><input class="mr-2" name="chkSelectAll" type="checkbox" (change)="selectAll($event.target.checked)">
               Select All</th>
           </tr>
         </thead>
@@ -79,7 +79,7 @@
             <td>
               <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ eventDetail.eventDetailId]"></i></a>
             </td>
-            <td><input class="event-checkbox" name="{{eventDetail.eventDetailId}}" type="checkbox" (change)="onChange(eventDetail.eventDetailId, $event.target.checked)"></td>
+            <td *ngIf="(user$ | async).roleName === roles.Admin"><input class="event-checkbox" name="{{eventDetail.eventDetailId}}" type="checkbox" (change)="onChange(eventDetail.eventDetailId, $event.target.checked)"></td>
           </tr>
         </tbody>
       </table>

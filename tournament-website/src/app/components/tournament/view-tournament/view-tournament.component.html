@@ -5,14 +5,14 @@
         <div class="card ml-2 mt-2 mr-2 shadow rounded">
           <div class="card-header bg-dark text-white"><span>Tournament</span>
             <a class="float-right" *ngIf="(user$ | async).roleName === roles.Admin">
-              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/event/'+ tournament.tournamentId + '/edit']"></i>
+              <i role="button" class="fa fa-edit" tooltip="Edit" aria-hidden="true" [routerLink]="['/tournament/'+ tournament?.tournamentId + '/edit']"></i>
             </a>
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Tournament name
-                <span class="badge badge-primary badge-success">{{tournament.tournamentName}}</span>
+                <span class="badge badge-primary badge-success">{{tournament?.tournamentName}}</span>
               </li>
             </ul>
           </div>
@@ -37,7 +37,7 @@
             <th>Event number</th>
             <th>Event date</th>
             <th>Action</th>
-            <th><input class="mr-2" name="chkSelectAll" type="checkbox" (change)="selectAll($event.target.checked)">
+            <th *ngIf="(user$ | async).roleName === roles.Admin"><input class="mr-2" name="chkSelectAll" type="checkbox" (change)="selectAll($event.target.checked)">
               Select All</th>
           </tr>
         </thead>
@@ -51,9 +51,9 @@
               {{event.eventDateTime | date: 'yyyy-MM-dd HH:mm:ss'}}
             </td>
             <td>
-              <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ event.eventId]"></i></a>
+              <a><i role="button" class="fa fa-eye" tooltip="View" aria-hidden="true" [routerLink]="['/event/'+ event?.eventId]"></i></a>
             </td>
-            <td><input class="event-checkbox" name="{{event.eventId}}" type="checkbox" (change)="onChange(event.eventId, $event.target.checked)"></td>
+            <td *ngIf="(user$ | async).roleName === roles.Admin"><input class="event-checkbox" name="{{event.eventId}}" type="checkbox" (change)="onChange(event?.eventId, $event.target.checked)"></td>
           </tr>
         </tbody>
       </table>
