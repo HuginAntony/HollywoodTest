@@ -30,12 +30,12 @@ namespace Tournament.WebApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -138,6 +138,7 @@ namespace Tournament.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tournament Web API v1");
             });
+
             app.UseCors(x => x.WithOrigins("http://localhost:4200")
                                            .AllowAnyMethod()
                                            .AllowAnyHeader());

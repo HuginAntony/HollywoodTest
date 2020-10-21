@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 
-public class TestFactory : WebApplicationFactory<TestApiStartup>
+namespace Tournament.WebApi.Tests.ApiTests
 {
-    protected override IHostBuilder CreateHostBuilder()
+    public class TestFactory : WebApplicationFactory<TestApiStartup>
     {
-        var builder = Host.CreateDefaultBuilder()
-            .ConfigureWebHostDefaults(x =>
-            {
-                x.UseStartup<TestApiStartup>().UseTestServer();
-            });
-        return builder;
+        protected override IHostBuilder CreateHostBuilder()
+        {
+            var builder = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(x =>
+                {
+                    x.UseStartup<TestApiStartup>().UseTestServer();
+                });
+            return builder;
+        }
     }
 }

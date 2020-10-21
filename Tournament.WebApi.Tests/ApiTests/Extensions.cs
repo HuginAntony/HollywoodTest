@@ -2,10 +2,13 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-public static class Extensions
+namespace Tournament.WebApi.Tests.ApiTests
 {
-    public static async Task<T> Deserialize<T>(this HttpResponseMessage newResponse)
+    public static class Extensions
     {
-        return JsonSerializer.Deserialize<T>(await newResponse.Content.ReadAsByteArrayAsync(), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        public static async Task<T> Deserialize<T>(this HttpResponseMessage newResponse)
+        {
+            return JsonSerializer.Deserialize<T>(await newResponse.Content.ReadAsByteArrayAsync(), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        }
     }
 }

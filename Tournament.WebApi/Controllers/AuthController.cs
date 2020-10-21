@@ -69,12 +69,13 @@ namespace Tournament.WebApi.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse { Message = "User already exists!" });
 
-            ApplicationUser user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 Email = request.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = request.Username
             };
+
             var result = await _userManager.CreateAsync(user, request.Password);
             
             if (!result.Succeeded)
@@ -102,12 +103,13 @@ namespace Tournament.WebApi.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse { Message = "User already exists!" });
 
-            ApplicationUser user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 Email = request.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = request.Username
             };
+
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)

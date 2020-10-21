@@ -3,38 +3,40 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tournament.DataAccess;
-using Tournament.WebApi;
 
-public class TestApiStartup : Startup
+namespace Tournament.WebApi.Tests.ApiTests
 {
-    public new static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .AddEnvironmentVariables()
-        .Build();
-
-    public TestApiStartup() : base(Configuration)
+    public class TestApiStartup : Startup
     {
-    }
+        public new static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
 
-    public override void ConfigureDatabase(IServiceCollection services)
-    {
-        services.AddDbContext<HollywoodDbContext>(options =>
-            options.UseInMemoryDatabase("OcmApiTest")
-        );
-
-        using (var serviceScope = services.BuildServiceProvider().CreateScope())
+        public TestApiStartup() : base(Configuration)
         {
-            var context = serviceScope.ServiceProvider.GetRequiredService<HollywoodDbContext>();
-            InitializeDbForTests(context);
         }
 
-    }
+        public override void ConfigureDatabase(IServiceCollection services)
+        {
+            services.AddDbContext<HollywoodDbContext>(options =>
+                options.UseInMemoryDatabase("HollywoodTest")
+            );
 
-    public void InitializeDbForTests(HollywoodDbContext db)
-    {
-        db.Tournament.Add(new Tournament.DataAccess.Models.Tournament {TournamentName = "Bingo"});
+            using (var serviceScope = services.BuildServiceProvider().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<HollywoodDbContext>();
+                InitializeDbForTests(context);
+            }
 
-        db.SaveChanges();
+        }
+
+        public void InitializeDbForTests(HollywoodDbContext db)
+        {
+            db.Tournament.Add(new Tournament.DataAccess.Models.Tournament {TournamentName = "Bingo"});
+
+            db.SaveChanges();
+        }
     }
 }
