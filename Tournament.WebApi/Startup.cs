@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -109,9 +110,9 @@ namespace Tournament.WebApi
                     Title = "Tournament REST API",
                     Description = "Used to create and update events related to a tournament"
                 });
-
-                c.AddFluentValidationRules();
             });
+
+            services.AddFluentValidationRulesToSwagger();
         }
 
         public virtual void ConfigureDatabase(IServiceCollection services)
