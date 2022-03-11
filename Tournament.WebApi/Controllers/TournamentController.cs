@@ -17,6 +17,7 @@ namespace Tournament.WebApi.Controllers
     //[Authorize]
     [Route("[controller]")]
     [Produces("application/json")]
+    //[ApiConventionType(typeof(DefaultApiConventions))]
     public class TournamentController : ControllerBase
     {
         private readonly IRepository<DataAccess.Models.Tournament> _tournamentRepository;
@@ -50,6 +51,7 @@ namespace Tournament.WebApi.Controllers
 
         [HttpGet]
         [Route("{id:long}", Name = "GetTournamentById")]
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         public async Task<IActionResult> GetTournamentById(long id)
         {
             var tournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id).SingleOrDefaultAsync();
@@ -73,8 +75,6 @@ namespace Tournament.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(TournamentResponse), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CreateTournament([FromBody] TournamentRequest tournamentRequest)
         {
@@ -93,6 +93,7 @@ namespace Tournament.WebApi.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Update))]
         public async Task<IActionResult> UpdateTournament(long id, [FromBody] TournamentRequest tournamentRequest)
         {
             var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id).SingleOrDefaultAsync();
@@ -110,6 +111,7 @@ namespace Tournament.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id:long}")]
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         public async Task<IActionResult> DeleteTournament(long id)
         {
             var thisTournament = await _tournamentRepository.LazyGet(t => t.TournamentId == id)
